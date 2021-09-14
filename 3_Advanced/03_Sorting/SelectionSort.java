@@ -1,3 +1,12 @@
+/*
+ * SelectionSort.java - Example of selection sort algorithm.
+ * @author: @professorgordon
+ * @url: http://johngordon.io/javaadvancedsorting.php
+ * @license: Creative Commons. No Warranty. No Liability.
+ * @disclaimer: This code file is intended strictly for
+ *              academic purposes. It is NOT intended for
+ *              use in production systems.
+ */
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
