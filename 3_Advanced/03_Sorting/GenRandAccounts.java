@@ -1,3 +1,9 @@
+/*
+ * GenRandAccounts.java - Utility program used for testing.
+ * @author: @professorgordon
+ * @url: http://johngordon.io/javaadvancedsorting.php
+ * 
+ */
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
