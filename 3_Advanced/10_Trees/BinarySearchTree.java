@@ -14,6 +14,7 @@
 public class BinarySearchTree 
 {
 	public BSTNode root;
+	public int BSTDepth = 0;
 
 	public void insert(int data)
 	{
@@ -112,6 +113,192 @@ public class BinarySearchTree
 			}
 			System.out.print(n.data + " ");  
 		}  
-	}  
+	}
 
+	public BSTNode searchRecursive(BSTNode n, int data)
+	{
+	    if (n == null || n.data == data)
+	    {
+	    	return n;
+	    }
+	    if (n.data < data)
+	    {
+	       return searchRecursive(n.right, data);
+	    }
+	    return searchRecursive(n.left, data);
+	}
+
+	
+	public BSTNode searchIterative(BSTNode n, int data)
+	{
+		while (n != null && data != n.data)
+		{
+			if (data < n.data)
+			{
+				n = n.left;
+			}
+			else
+			{
+				n = n.right;
+			}
+		}
+		return n;
+	}
+	
+	public int depth(BSTNode n)
+	{
+		if (n == null)
+		{
+			return 0;
+		}
+		else
+		{
+			int left = depth(n.left);
+			int right = depth(n.right);
+			// Option 1
+			//return (1 + ((l > r) ? l : r));
+			// Option 2
+			//if (left > right)
+			//	return(left + 1);
+			//else return(right + 1);
+			// Option 3
+			return Math.max(left, right) + 1;
+		}
+	}
+
+	public void treeDepth(BSTNode n, int counter)
+	{
+		if (n == null)
+		{
+			return;
+		}
+		if (n.left == null && n.right == null)
+		{
+			this.BSTDepth = Math.max(BSTDepth, counter);
+		}
+		treeDepth(n.left, counter + 1);
+		treeDepth(n.right, counter + 1);
+	}
+
+
+	
+	public static BSTNode deleteNode(BSTNode n, int data) 
+	{
+        if(n == null) return n;
+        if(data > n.data)
+        {
+        	// Traverse right
+            n.right = deleteNode(n.right, data);
+        }
+        else if(data < n.data)
+        {
+        	// Traverse left
+            n.left = deleteNode(n.left, data);
+        }
+        else
+        {
+        	// Found the node
+            if(n.left == null && n.right == null)
+            {
+            	// It is a leaf, set it to null (delete it)
+                n = null;
+            }
+            else if(n.right != null)
+            {
+            	// It has a right-child, get the successor 
+                n.data = getSuccessor(n);
+                n.right = deleteNode(n.right, n.data);
+            }
+            else
+            {
+            	// No successor so go back
+                n.data = getPredecessor(n);
+                n.left = deleteNode(n.left, n.data);
+            }
+        }
+        return n;
+    }
+	
+	
+    private static int getSuccessor(BSTNode n){
+        n = n.right;
+        while(n.left != null){
+            n = n.left;
+        }
+        return n.data;
+    }
+	
+    private static int getPredecessor(BSTNode n){
+        n = n.left;
+        while(n.right != null){
+            n = n.right;
+        }
+        return n.data;
+    }
+	
+
+    /*
+     * Another approach ...
+     * 
+	static BSTNode deleteNode(BSTNode n, int data)
+	{
+		// The base case
+		if (n == null)
+			return n;
+
+		// Recurse for ancestors of n
+		if (n.data > data)
+		{
+			n.left = deleteNode(n.left, data);
+			return n;
+		}
+		else if (n.data < data)
+		{
+			n.right = deleteNode(n.right, data);
+			return n;
+		}
+		
+		// If one child node is empty
+		if (n.left == null)
+		{
+			BSTNode hold = n.right;
+			return hold;
+		}
+		else if (n.right == null)
+		{
+			BSTNode hold = n.left;
+			return hold;
+		}
+
+		// If both child nodes are present
+		else
+		{
+			BSTNode parent = n;
+
+			// Find the successor
+			BSTNode successor = n.right;
+			while (successor.left != null)
+			{
+				parent = successor;
+				successor = successor.left;
+			}
+			// We'll assume successor is from the left
+			// unless it's null, otherwise we'll use
+			// the right
+			if (parent != n)
+				parent.left = successor.right;
+			else
+				parent.right = successor.right;
+
+			// Copy successor's data value
+			n.data = successor.data;
+
+			return n;
+		}
+	}
+
+
+    */
+    
+    
 }
